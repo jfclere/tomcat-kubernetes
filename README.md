@@ -48,7 +48,7 @@ Expose the deployment
 kubectl expose deployment tomcat-in-the-cloud --type=LoadBalancer --port 80 --target-port 8080
 ```
 Use the consle to create the route and change it to make it not sticky and session less edit the yalm and save it, Something like
-+++
+```
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
@@ -57,7 +57,7 @@ metadata:
     haproxy.router.openshift.io/disable_cookies: 'true'
     openshift.io/host.generated: 'true'
     ...
-+++
+```
 The route will be modified when you save it.
 To access to the tomcat use the hostname something like
 http://tomcat-in-the-cloud-tomcat-in-the-cloud.193b.starter-ca-central-1.openshiftapps.com/
