@@ -2,7 +2,8 @@
 What is needed to create a Tomcat Docker image to run a cluster of tomcats in Kubernetes. 
 
 Get the latest tomcat snapshot of tomcat:
-mv install
+mvn clean
+mvn install
 Build the Docker image:
 docker build -t docker.io/<user>/tomcat-in-the-cloud --build-arg registry_id=tomcat-in-the-cloud .
 or (to add your sample.war webapp to my existing image). 
