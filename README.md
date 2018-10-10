@@ -14,7 +14,7 @@ or (to add your sample.war webapp to my existing image).
 ```
 docker build -f Dockerfile.webapp -t docker.io/<user>/tomcat-in-the-cloud-war --build-arg war=/sample.war --build-arg registry_id=tomcat-in-the-cloud .
 ```
-Push the image on docker
+Push the image on docker (use tomcat-in-the-cloud-war for the war one)
 ```
 docker login
 docker push <user>/tomcat-in-the-cloud
