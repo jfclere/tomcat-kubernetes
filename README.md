@@ -1,5 +1,5 @@
 # tomcat-kubernetes
-What is needed to create a Tomcat Docker image to run a cluster of tomcats in Kubernetes. 
+What is needed to create a Tomcat Docker image to run a cluster of tomcats in Kubernetes.
 
 Get the latest tomcat snapshot of tomcat:
 ```
@@ -47,7 +47,7 @@ Expose the deployment
 ```
 kubectl expose deployment tomcat-in-the-cloud --type=LoadBalancer --port 80 --target-port 8080
 ```
-Use the consle to create the route and change it to make it not sticky and session less edit the yalm and save it, Something like
+Use the console to create the route and change it to make it not sticky and session less edit the yaml and save it, Something like
 ```
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -61,6 +61,3 @@ metadata:
 The route will be modified when you save it.
 To access to the tomcat use the hostname something like
 http://tomcat-in-the-cloud-tomcat-in-the-cloud.193b.starter-ca-central-1.openshiftapps.com/
-
-
-
