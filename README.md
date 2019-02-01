@@ -47,7 +47,8 @@ Expose the deployment
 ```
 kubectl expose deployment tomcat-in-the-cloud --type=LoadBalancer --port 80 --target-port 8080
 ```
-Use the console to create the route and change it to make it not sticky and session less edit the yaml and save it, Something like
+Use the console to create the route then change it to make it not sticky and session less, lastly edit the yaml and save it.
+Something like
 ```
 apiVersion: route.openshift.io/v1
 kind: Route
