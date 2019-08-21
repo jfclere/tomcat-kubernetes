@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-oraclejdk8:slim
+FROM openjdk:8-jre-alpine
 LABEL Description="Tomcat image to test tomcat-in-the-cloud. standalone tomcat version"
 VOLUME /tmp
 
