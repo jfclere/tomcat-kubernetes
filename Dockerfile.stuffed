@@ -1,0 +1,13 @@
+FROM jfclere/tomcat-stuffed:1.0
+LABEL Description="Tomcat image to use with the JWS operator"
+VOLUME /tmp
+
+USER root
+
+ADD server.xml.stuffed /deployments/conf/server.xml
+ADD start.sh /opt
+ADD usekube.sh /opt
+ADD usedns.sh /opt
+RUN chmod 777 /opt/*.sh
+
+ENTRYPOINT [ "/opt/start.sh" ]
