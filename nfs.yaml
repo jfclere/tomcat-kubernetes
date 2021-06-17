@@ -9,7 +9,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Mi
+      storage: 1Gi
   storageClassName: gp2
   volumeMode: Filesystem
 
@@ -62,17 +62,28 @@ spec:
 
 ---
 
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: nfs
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nfs
 spec:
   capacity:
-    storage: 10Mi
+    storage: 1Gi
   accessModes:
     - ReadWriteMany
+  storageClassName: "nfs"
   nfs:
-    server: 172.30.127.58
+    server: 172.30.194.91
+    #server: nfs-server
     path: "/myhome"
 
 ---
@@ -83,9 +94,9 @@ metadata:
   name: nfs
 spec:
   accessModes:
-    - ReadWriteOnce
-  #  - ReadWriteMany
-  # storageClassName: ""
+  #  - ReadWriteOnce
+    - ReadWriteMany
+  storageClassName: "nfs"
   resources:
     requests:
-      storage: 10Mi
+      storage: 1Gi
