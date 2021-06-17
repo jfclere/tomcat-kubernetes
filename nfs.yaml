@@ -71,7 +71,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: nfs-server.rhn-engineering-jclere-dev.svc.cluster.local
+    server: nfs-server
     path: "/myhome"
 
 ---
