@@ -24,5 +24,8 @@ if [ -n "$ENV_FILES" ]; then
   )
 fi
 
+# Copy the war in webapps (probably we can use a ENV_FILES for that)
+cp /deployments/*.war /deployments/webapps/ || true
+
 # start the tomcat
 java $JAVA_OPTS -jar app.jar

@@ -35,7 +35,8 @@ spec:
       - name: tomcat
         image: quay.io/jfclere/nfs
         ports:
-        - containerPort: 2049
+        - name: nfs
+          containerPort: 2049
         volumeMounts:
         - mountPath: /myhome
           name: nfs-for-tomcat
@@ -71,7 +72,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: nfs-server
+    server: 172.30.127.58
     path: "/myhome"
 
 ---
@@ -82,8 +83,9 @@ metadata:
   name: nfs
 spec:
   accessModes:
-    - ReadWriteMany
-  storageClassName: ""
+    - ReadWriteOnce
+  #  - ReadWriteMany
+  # storageClassName: ""
   resources:
     requests:
       storage: 10Mi
