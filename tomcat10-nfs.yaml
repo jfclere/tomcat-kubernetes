@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tomcat10-example-app
+  name: tomcat10-example-app
+spec:
+  volumes:
+    - name: nfs-volume
+      nfs: 
+        # replace by the pod IP
+        #server: 172.30.99.214
+        server: 172.30.177.41
+        path: /myhome
+  containers:
+    - name: app
+      image: quay.io/jfclere/tomcat10
+
+      # Mount the NFS volume in the container
+      volumeMounts:
+        - name: nfs-volume
+          mountPath: /deployment/webapps

@@ -34,6 +34,8 @@ spec:
       containers:
       - name: tomcat
         image: quay.io/jfclere/nfs
+        securityContext:
+          privileged: true
         ports:
         - name: nfs
           containerPort: 2049
@@ -59,44 +61,3 @@ spec:
       targetport: "2049"
   selector:
    app: tomcat
-
----
-
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: nfs
-provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer
-
----
-
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nfs
-spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: "nfs"
-  nfs:
-    server: 172.30.194.91
-    #server: nfs-server
-    path: "/myhome"
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: nfs
-spec:
-  accessModes:
-  #  - ReadWriteOnce
-    - ReadWriteMany
-  storageClassName: "nfs"
-  resources:
-    requests:
-      storage: 1Gi
