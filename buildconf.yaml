@@ -1,0 +1,18 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: "tomcat-sample-build" 
+spec:
+  source: 
+    git:
+      uri: "https://github.com/jfclere/demo-webapp.git"
+      ref: "jakartaEE"
+  strategy: 
+    sourceStrategy:
+      from:
+        kind: "DockerImage"
+        name: "quay.io/jfclere/tomcat10-builder:latest"
+  output: 
+    to:
+      kind: "ImageStreamTag"
+      name: "origin-tomcat-sample:latest"

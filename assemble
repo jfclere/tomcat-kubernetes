@@ -1,0 +1,56 @@
+#!/bin/sh
+
+echo "Running: $0"
+
+if [ -d /tmp/src ]; then
+  # We are in openshift using sourceStrategy
+  echo "OpenShift: using /tmp/src"
+  LOCAL_SOURCE_DIR=/tmp/src
+else
+  cd $LOCAL_SOURCE_DIR
+  git clone ${OPENSHIFT_BUILD_SOURCE} /tmp/src
+  git checkout ${OPENSHIFT_BUILD_REFERENCE}
+
+  cd -
+fi
+
+
+if [ -f "$LOCAL_SOURCE_DIR/pom.xml" ]; then
+  cd $LOCAL_SOURCE_DIR
+
+  # Add JAVA_HOME
+  export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+  # Add JVM default options
+  export MAVEN_OPTS="${MAVEN_OPTS:-$(/opt/run-java/java-default-options)}"
+  MAVEN_ARGS="${MAVEN_ARGS--e -Popenshift -DskipTests -Dcom.redhat.xpaas.repo.redhatga package}"
+
+  # Use maven batch mode (CLOUD-579)
+  # Always force IPv4 (CLOUD-188)
+  # Append user-supplied arguments (CLOUD-412)
+  MAVEN_ARGS="$MAVEN_ARGS --batch-mode -Djava.net.preferIPv4Stack=true ${MAVEN_ARGS_APPEND}"
+
+  echo "Found pom.xml... attempting to build with 'mvn ${MAVEN_ARGS}'"
+  echo "Using MAVEN_OPTS '${MAVEN_OPTS}'"
+
+  echo "Using $(mvn --version)"
+
+  # Execute the actual build
+  echo "Doing mvn $MAVEN_ARGS install"
+  mvn $MAVEN_ARGS install
+
+  ERR=$?
+  if [ $ERR -ne 0 ]; then
+    echo "Aborting due to error code $ERR from Maven build"
+    exit $ERR
+  fi
+
+  # Copy the war to /deployments/webapps
+  cp target/*.war /deployments/webapps
+
+  cd -
+
+else
+  echo "Aborting due to missing pom.xml for Maven build"
+  exit 1
+fi
