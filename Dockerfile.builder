@@ -17,5 +17,7 @@ RUN chmod 777 /tmp
 RUN apt-get update
 RUN apt-get install -y git maven openjdk-11-jdk-headless
 
+ENV JAVA_HOME=/usr/lib/jvm/default-java
+
 USER 1001
 ENTRYPOINT [ "/opt/start.sh" ]

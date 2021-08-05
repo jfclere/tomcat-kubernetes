@@ -7,11 +7,12 @@ if [ -d /tmp/src ]; then
   echo "OpenShift: using /tmp/src"
   LOCAL_SOURCE_DIR=/tmp/src
 else
-  cd $LOCAL_SOURCE_DIR
+  mkdir -p /tmp/src
   git clone ${OPENSHIFT_BUILD_SOURCE} /tmp/src
+  cd /tmp/src
   git checkout ${OPENSHIFT_BUILD_REFERENCE}
-
   cd -
+  LOCAL_SOURCE_DIR=/tmp/src
 fi
 
 
