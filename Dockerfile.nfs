@@ -1,0 +1,17 @@
+FROM fedora
+LABEL Description="Small nfs server for JWS operator"
+VOLUME /tmp
+
+USER root
+
+RUN yum install nfs-ganesha nfs-ganesha-vfs -y
+RUN yum install procps-ng nmap net-tools bind-utils iputils -y
+
+ADD ganesha.conf /etc/ganesha/ganesha.conf
+ADD nfsd.sh /usr/bin/nfsd.sh
+RUN mkdir /myhome
+RUN chmod 777 /myhome
+
+EXPOSE 2049
+
+ENTRYPOINT ["/usr/bin/nfsd.sh"]
