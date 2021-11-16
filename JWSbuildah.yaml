@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jwsbuildah
+spec:
+  template:
+    spec:
+      containers:
+      - name: jwsbuildah
+        image: quay.io/jfclere/tomcat10-buildah
+        volumeMounts:
+        - name: configjson
+          mountPath: "/auth"
+          readOnly: true
+      volumes:
+      - name: configjson
+        secret:
+          secretName: jfc
+      restartPolicy: OnFailure

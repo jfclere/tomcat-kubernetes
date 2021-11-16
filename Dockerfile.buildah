@@ -1,0 +1,23 @@
+FROM registry.access.redhat.com/ubi8
+LABEL Description="Builder for JWS operator"
+VOLUME /tmp
+
+USER root
+
+RUN yum install buildah maven git -y 
+#RUN rm -rf /var/lib/containers
+ADD build.sh /usr/bin/build.sh
+ADD Dockerfile.JWS /
+
+# The env
+# to run with --env var=val
+#
+ENV webAppWarFileName=ROOT.war
+ENV webAppWarImage=quay.io/jfclere/test
+ENV webAppSourceRepositoryURL=https://github.com/jfclere/demo-webapp.git
+ENV webAppSourceRepositoryRef=main
+ENV webAppSourceRepositoryContextDir=
+ENV webAppSourceImage=registry.redhat.io/jboss-webserver-5/webserver55-openjdk8-tomcat9-openshift-rhel8
+
+
+ENTRYPOINT ["/usr/bin/build.sh"]
