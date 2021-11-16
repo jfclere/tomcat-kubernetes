@@ -8,16 +8,16 @@ mvn install
 ```
 Build the Docker image:
 ```
-docker build -t docker.io/<user>/tomcat-in-the-cloud --build-arg registry_id=tomcat-in-the-cloud .
+podman build -t quay.io/<user>/tomcat-in-the-cloud --build-arg registry_id=tomcat-in-the-cloud .
 ```
 or (to add your sample.war webapp to my existing image).
 ```
-docker build -f Dockerfile.webapp -t docker.io/<user>/tomcat-in-the-cloud-war --build-arg war=/sample.war --build-arg registry_id=tomcat-in-the-cloud .
+podman build -f Dockerfile.webapp -t quay.io/<user>/tomcat-in-the-cloud-war --build-arg war=/sample.war --build-arg registry_id=tomcat-in-the-cloud .
 ```
 Push the image on docker (use tomcat-in-the-cloud-war for the war one)
 ```
-docker login
-docker push <user>/tomcat-in-the-cloud
+podman login quay.io/<user>/tomcat-in-the-cloud
+podman push quay.io/<user>/tomcat-in-the-cloud
 ```
 
 For OpenShift
