@@ -8,6 +8,9 @@ spec:
       containers:
       - name: jwsbuildah
         image: quay.io/jfclere/tomcat10-buildah
+        env:
+        - name: webAppWarImage
+          value: quay.io/jfclere/newtest
         volumeMounts:
         - name: configjson
           mountPath: "/auth"
