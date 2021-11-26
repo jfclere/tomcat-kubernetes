@@ -4,9 +4,10 @@ VOLUME /tmp
 
 USER root
 
-RUN yum install buildah maven git -y 
+RUN yum install buildah maven git python3-requests python3-lxml python3-ujson unzip -y 
 #RUN rm -rf /var/lib/containers
 ADD build.sh /usr/bin/build.sh
+ADD redhat_jws_download.py /usr/bin/redhat_jws_download.py
 ADD Dockerfile.JWS /
 
 # The env
