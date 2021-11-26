@@ -16,10 +16,11 @@ podman run --mount type=bind,target=/home/${USER}/.docker/config.json,destinatio
 ```
 It supports a bunch of parameters:
 
-###webAppWarFileName
+
+### webAppWarFileName
 That is the name of the war to deploy in webapps, the default is ROOT.war
 
-###webAppWarImage
+### webAppWarImage
 That is the name of docker image that is build and contains the war file, for quay.io/jfclere/test
 
 ### webAppSourceRepositoryURL
