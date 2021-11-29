@@ -1,4 +1,5 @@
-FROM openjdk:8-jre-alpine
+# Copied and adapted from https://github.com/apache/tomcat/blob/main/modules/stuffed/Dockerfile
+FROM openjdk:8-jre
 LABEL Description="Tomcat image to test tomcat-in-the-cloud. standalone tomcat version"
 VOLUME /tmp
 
@@ -19,8 +20,7 @@ RUN chmod 777 /apache-tomcat/temp
 
 WORKDIR /apache-tomcat
 
-ARG registry_id
-ENV OPENSHIFT_KUBE_PING_NAMESPACE $registry_id
+ENV OPENSHIFT_KUBE_PING_NAMESPACE "default"
 
 RUN sh -c 'chmod a+x bin/*.sh'
 ENV JAVA_OPTS=""

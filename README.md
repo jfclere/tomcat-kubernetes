@@ -8,16 +8,16 @@ mvn install
 ```
 Build the Docker image:
 ```
-podman build -t quay.io/<user>/tomcat-in-the-cloud --build-arg registry_id=tomcat-in-the-cloud .
+podman build -t quay.io/${USER}/tomcat-stuffed
 ```
-or (to add your sample.war webapp to my existing image).
+or (to add your sample.war webapp to the existing image).
 ```
-podman build -f Dockerfile.webapp -t quay.io/<user>/tomcat-in-the-cloud-war --build-arg war=/sample.war --build-arg registry_id=tomcat-in-the-cloud .
+podman build -f Dockerfile.webapp -t quay.io/${USER}/tomcat-in-the-cloud-war --build-arg war=/sample.war .
 ```
 Push the image on docker (use tomcat-in-the-cloud-war for the war one)
 ```
-podman login quay.io/<user>/tomcat-in-the-cloud
-podman push quay.io/<user>/tomcat-in-the-cloud
+podman login quay.io/${USER}/tomcat-in-the-cloud
+podman push quay.io/${USER}/tomcat-in-the-cloud-war
 ```
 
 For OpenShift
@@ -35,9 +35,36 @@ Add the user to view the pods
 ```
 oc policy add-role-to-user view system:serviceaccount:tomcat-in-the-cloud:default -n tomcat-in-the-cloud
 ```
-Create the first pod
+Create the first pod ajust tomcat-in-the-cloud.yaml like:
 ```
-kubectl run tomcat-in-the-cloud --image=docker.io/jfclere/tomcat-in-the-cloud --port=8080
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-in-the-cloud
+  labels:
+    app: tomcat-in-the-cloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat-in-the-cloud
+  template:
+    metadata:
+      labels:
+        app: tomcat-in-the-cloud
+    spec:
+      containers:
+      - name: tomcat-in-the-cloud
+        image: quay.io/jfclere/tomcat-in-the-cloud-war
+        ports:
+        - containerPort: 8080
+        env:
+        - name: OPENSHIFT_KUBE_PING_NAMESPACE
+          value: "tomcat-in-the-cloud"
+```
+start it:
+```
+kubectl create -f tomcat-in-the-cloud.yaml
 ```
 Scale it do 2 replicas
 ```
@@ -62,3 +89,12 @@ metadata:
 The route will be modified when you save it.
 To access to the tomcat use the hostname something like
 http://tomcat-in-the-cloud-tomcat-in-the-cloud.193b.starter-ca-central-1.openshiftapps.com/
+
+You can also use:
+```
+kubectl get services
+NAME                  TYPE           CLUSTER-IP      EXTERNAL-IP                         PORT(S)        AGE
+tomcat-in-the-cloud   LoadBalancer   172.21.33.123   ad04ef07-eu-de.lb.appdomain.cloud   80:32475/TCP   31s
+```
+
+Here use http://ad04ef07-eu-de.lb.appdomain.cloud/sample/ to reach the application

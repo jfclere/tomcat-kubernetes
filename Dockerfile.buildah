@@ -4,7 +4,8 @@ VOLUME /tmp
 
 USER root
 
-RUN yum install buildah maven git python3-requests python3-lxml python3-ujson unzip -y 
+RUN yum install buildah maven git python3-requests python3-lxml unzip gcc-c++ pip3 python3-dev -y 
+RUN pip3 install ujson
 #RUN rm -rf /var/lib/containers
 ADD build.sh /usr/bin/build.sh
 ADD redhat_jws_download.py /usr/bin/redhat_jws_download.py

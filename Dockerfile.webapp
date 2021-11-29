@@ -1,4 +1,4 @@
-FROM jfclere/tomcat-in-the-cloud
+FROM jfclere/tomcat-stuffed
 LABEL Description="Tomcat image with a demo webapp"
 VOLUME /tmp
 
@@ -10,8 +10,7 @@ ADD $war/ /apache-tomcat/webapps
 
 WORKDIR /apache-tomcat
 
-ARG registry_id
-ENV OPENSHIFT_KUBE_PING_NAMESPACE $registry_id
+ENV OPENSHIFT_KUBE_PING_NAMESPACE "default"
 
 RUN sh -c 'chmod a+x bin/*.sh'
 ENV JAVA_OPTS=""
