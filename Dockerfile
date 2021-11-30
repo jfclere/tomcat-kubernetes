@@ -20,7 +20,7 @@ RUN chmod 777 /apache-tomcat/temp
 
 WORKDIR /apache-tomcat
 
-ENV OPENSHIFT_KUBE_PING_NAMESPACE "default"
+ENV KUBERNETES_NAMESPACE "default"
 
 RUN sh -c 'chmod a+x bin/*.sh'
 ENV JAVA_OPTS=""
