@@ -54,8 +54,9 @@ if [ $? -ne 0 ]; then
 fi
 
 # Copies the resulting war to deployments
-mkdir /deployments
-cp target/*.war /deployments/${webAppWarFileName}
+echo "Copies the resulting war to deployments"
+mkdir /tmp/deployments
+cp /tmp/*/target/*.war /tmp/deployments/${webAppWarFileName}
 
 # The secret is mounted in /auth
 # the /auth/.dockerconfigjson comes from mounting the secret in the pod
@@ -67,6 +68,7 @@ cp target/*.war /deployments/${webAppWarFileName}
 # ${webAppWarImage} is where we push the result
 # ${webAppSourceImage} is what we use in FROM of the Dockerfile
 #
-cd /
-STORAGE_DRIVER=vfs buildah bud -f Dockerfile.JWS -t ${webAppWarImage} --authfile /auth/.dockerconfigjson --build-arg webAppSourceImage=${webAppSourceImage}
+echo "Use buildah to build and push to ${webAppWarImage}"
+cd /tmp
+STORAGE_DRIVER=vfs buildah bud -f /Dockerfile.JWS -t ${webAppWarImage} --authfile /auth/.dockerconfigjson --build-arg webAppSourceImage=${webAppSourceImage}
 STORAGE_DRIVER=vfs buildah push --authfile /auth/.dockerconfigjson ${webAppWarImage}
