@@ -58,6 +58,17 @@ echo "Copies the resulting war to deployments"
 mkdir /tmp/deployments
 cp /tmp/*/target/*.war /tmp/deployments/${webAppWarFileName}
 
+# on not privileged openshift arrange /etc/subuid and /etc/subgid to the current user.
+# note sed -i can't we can't write a new file /etc
+MYUSER=`id -u`
+echo "Current user: ${MYUSER}"
+if [ ${MYUSER} != "1000" ]; then
+  sed "s:1000:${MYUSER}:" /etc/subuid > subuid.new
+  cat subuid.new >> /etc/subuid
+  sed "s:1000:${MYUSER}:" /etc/subgid > subgid.new
+  cat subgid.new >> /etc/subgid
+fi
+
 # The secret is mounted in /auth
 # the /auth/.dockerconfigjson comes from mounting the secret in the pod
 # the source here is the $HOME/.docker/config.json create like:
@@ -70,5 +81,6 @@ cp /tmp/*/target/*.war /tmp/deployments/${webAppWarFileName}
 #
 echo "Use buildah to build and push to ${webAppWarImage}"
 cd /tmp
+HOME=/tmp
 STORAGE_DRIVER=vfs buildah bud -f /Dockerfile.JWS -t ${webAppWarImage} --authfile /auth/.dockerconfigjson --build-arg webAppSourceImage=${webAppSourceImage}
 STORAGE_DRIVER=vfs buildah push --authfile /auth/.dockerconfigjson ${webAppWarImage}
