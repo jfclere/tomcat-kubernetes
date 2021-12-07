@@ -31,6 +31,7 @@ ENV webAppSourceRepositoryContextDir=
 ENV webAppSourceImage=registry.redhat.io/jboss-webserver-5/webserver55-openjdk8-tomcat9-openshift-rhel8
 
 # The user
+RUN useradd -u 1000 jbossbuilder
 USER 1000:1000
 
 
