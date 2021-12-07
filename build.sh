@@ -54,7 +54,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Copies the resulting war to deployments
-echo "Copies the resulting war to deployments"
+echo "Copies the resulting war to deployments/${webAppWarFileName}"
 mkdir /tmp/deployments
 cp /tmp/*/target/*.war /tmp/deployments/${webAppWarFileName}
 
