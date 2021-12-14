@@ -63,12 +63,14 @@ spec:
     spec:
       containers:
       - name: tomcat-in-the-cloud
-        image: quay.io/jfclere/tomcat-in-the-cloud-war
+        image: quay.io/jfclere/tomcat-in-the-cloud
         ports:
         - containerPort: 8080
         env:
         - name: OPENSHIFT_KUBE_PING_NAMESPACE
           value: "tomcat-in-the-cloud"
+        - name: ENV_FILES
+          value: "/opt/usekube.sh"
 ```
 start it:
 ```
