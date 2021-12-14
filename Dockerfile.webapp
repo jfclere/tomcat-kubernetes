@@ -1,17 +1,24 @@
-FROM jfclere/tomcat-stuffed
-LABEL Description="Tomcat image with a demo webapp"
+ARG IMAGE
+FROM ${IMAGE}
+LABEL Description="Tomcat image to use with the JWS operator"
 VOLUME /tmp
 
 USER root
 
+ADD server.xml.stuffed /deployments/conf/server.xml
+ADD start.sh /opt
+ADD usekube.sh /opt
+ADD usedns.sh /opt
+RUN chmod 777 /opt/*.sh
+
 ARG war
 RUN echo $war
-ADD $war/ /apache-tomcat/webapps
-
-WORKDIR /apache-tomcat
+ADD $war /deployments
 
 ENV KUBERNETES_NAMESPACE "default"
 
-RUN sh -c 'chmod a+x bin/*.sh'
 ENV JAVA_OPTS=""
-ENTRYPOINT [ "sh", "-c", "bin/startup.sh" ]
+
+ENV ENV_FILES=""
+
+ENTRYPOINT [ "/opt/start.sh" ]

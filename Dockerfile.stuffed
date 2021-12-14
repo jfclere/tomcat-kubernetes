@@ -1,4 +1,5 @@
-FROM jfclere/tomcat-stuffed:1.0
+ARG IMAGE
+FROM ${IMAGE}
 LABEL Description="Tomcat image to use with the JWS operator"
 VOLUME /tmp
 
