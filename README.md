@@ -1,18 +1,24 @@
 # tomcat-kubernetes
 What is needed to create a Tomcat Docker image to run a cluster of tomcats in Kubernetes.
 
-Get the latest tomcat snapshot of tomcat:
+Get the latest tomcat snapshot of tomcat from the ASF tomcat repo:
 ```
+git clone https://github.com/apache/tomcat.git
+cd modules/stuffed
 mvn clean
 mvn install
 ```
 Build the Docker image:
 ```
 podman build -t quay.io/${USER}/tomcat-stuffed
+podman login quay.io/${USER}/tomcat-stuffed
 ```
-or (to add your sample.war webapp to the existing image).
+This tomcat image can used to prepare a custom image with you webapp (here sample.war)  
+
 ```
-podman build -f Dockerfile.webapp -t quay.io/${USER}/tomcat-in-the-cloud-war --build-arg war=/sample.war .
+cd $HOME
+git clone https://github.com/jfclere/tomcat-kubernetes.git 
+podman build -f Dockerfile.webapp -t quay.io/${USER}/tomcat-in-the-cloud-war --build-arg war=/sample.war --build-arg USER=${USER} .
 ```
 Push the image on docker (use tomcat-in-the-cloud-war for the war one)
 ```
