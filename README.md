@@ -18,6 +18,7 @@ This tomcat image can used to prepare a custom image with you webapp (here sampl
 ```
 cd $HOME
 git clone https://github.com/jfclere/tomcat-kubernetes.git 
+cd tomcat-kubernetes
 podman build -f Dockerfile.webapp -t quay.io/${USER}/tomcat-in-the-cloud-war --build-arg war=/sample.war --build-arg USER=${USER} .
 ```
 Push the image on docker (use tomcat-in-the-cloud-war for the war one)
