@@ -1,0 +1,14 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: tomcat-in-the-cloud-imagestream
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - name: latest
+    from:
+      kind: DockerImage
+      name: quay.io/jfclere/tomcat-in-the-cloud-war:latest
+    referencePolicy:
+      type: Source

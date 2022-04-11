@@ -1,0 +1,13 @@
+apiVersion: web.servers.org/v1alpha1
+kind: WebServer
+metadata:
+  name: tomcat-in-the-cloud-war
+spec:
+  # Add fields here
+  applicationName: test-app
+  useSessionClustering: true
+  replicas: 2
+  webImageStream:
+    imageStreamNamespace: tomcat-in-the-cloud
+    imageStreamName: tomcat-in-the-cloud-imagestream
+
