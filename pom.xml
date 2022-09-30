@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <tomcat.version>9.0-SNAPSHOT</tomcat.version>
+        <tomcat.version>9.0.65</tomcat.version>
     </properties>
 
     <dependencies>
