@@ -1,20 +1,3 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: nfs-for-tomcat
-  labels:
-    app: tomcat
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: gp2
-  volumeMode: Filesystem
-
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,21 +25,22 @@ spec:
         volumeMounts:
         - mountPath: /myhome
           name: nfs-for-tomcat
+      serviceAccount: nfs-storage-sa
       volumes:
         - name: nfs-for-tomcat
-          persistentVolumeClaim:
-            claimName: nfs-for-tomcat
+          emptyDir: {}
 
 ---
 
 kind: Service
 apiVersion: v1
 metadata:
-  name: nfs-server
+  name: nfs-service0
 spec:
   ClusterIP: "None"
   ports:
     - name: nfs
+      protocol: TCP
       port: 2049
       targetport: "2049"
   selector:
