@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    description: "The service for tomcat cluster membership."
+  name: my-tomcat-app-membership
+spec:
+  clusterIP: None
+  ports:
+  - name: membership
+    port: 8888
+  selector:
+    app: my-tomcat-app

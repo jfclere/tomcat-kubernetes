@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tomcat1
+  labels:
+    app: my-tomcat-app
+spec:
+  containers:
+  - name: tomcat
+    image: tomcat
+    ports:
+    - containerPort: 8080
