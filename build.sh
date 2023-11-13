@@ -80,6 +80,7 @@ fi
 # ${webAppSourceImage} is what we use in FROM of the Dockerfile
 #
 echo "Use buildah to build and push to ${webAppWarImage}"
+echo "Running STORAGE_DRIVER=vfs buildah bud -f /Dockerfile.JWS -t ${webAppWarImage} --authfile /auth/.dockerconfigjson --build-arg webAppSourceImage=${webAppSourceImage}"
 cd /tmp
 HOME=/tmp
 STORAGE_DRIVER=vfs buildah bud -f /Dockerfile.JWS -t ${webAppWarImage} --authfile /auth/.dockerconfigjson --build-arg webAppSourceImage=${webAppSourceImage}
