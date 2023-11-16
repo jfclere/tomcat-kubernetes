@@ -11,10 +11,10 @@ RUN yum install buildah maven git -y
 #RUN rm -rf /var/lib/containers
 
 # For openshift (a bit hacky)
-RUN echo "1000:100000:65536" > /etc/subuid
-RUN echo "1000:100000:65536" > /etc/subgid
-RUN chmod a+w /etc/subuid
-RUN chmod a+w /etc/subgid
+#RUN echo "1000:100000:65536" > /etc/subuid
+#RUN echo "1000:100000:65536" > /etc/subgid
+#RUN chmod a+w /etc/subuid
+#RUN chmod a+w /etc/subgid
 
 ADD build.sh /usr/bin/build.sh
 ADD redhat_jws_download.py /usr/bin/redhat_jws_download.py
