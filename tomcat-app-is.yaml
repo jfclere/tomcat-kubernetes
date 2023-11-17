@@ -4,6 +4,17 @@ metadata:
   name: tomcat
   labels:
     app: tomcat
+  annotations:
+    image.openshift.io/triggers: |-
+      [
+        {
+          "from": {
+            "kind": "ImageStreamTag",
+            "name": "tomcat:latest"
+          },
+          "fieldPath": "spec.template.spec.containers[0].image"
+        }
+      ]
 spec:
   replicas: 2
   selector:
