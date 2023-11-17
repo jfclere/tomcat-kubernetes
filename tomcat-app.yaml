@@ -29,6 +29,7 @@ spec:
     spec:
       containers:
       - name: tomcat
-        image: docker.io/jfclere/tomcat-in-the-cloud
+        image: quay.io/jfclere/tomcat10.1-demo
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
