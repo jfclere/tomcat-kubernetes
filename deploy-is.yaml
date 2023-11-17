@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat
+  labels:
+    app: tomcat
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+      annotations:
+        alpha.image.policy.openshift.io/resolve-names: '*'
+    spec:
+      containers:
+      - name: tomcat
+        image: jboss-webserver56-openjdk8-tomcat9-openshift-ubi8:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
