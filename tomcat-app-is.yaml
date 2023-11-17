@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: tomcat
-        image: jboss-webserver56-openjdk8-tomcat9-openshift-ubi8:latest
+        image: tomcat
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
