@@ -1,0 +1,8 @@
+ARG webAppSourceImage
+FROM ${webAppSourceImage}
+LABEL Description="JWS image to test tomcat-in-the-cloud."
+
+# Copy the war file in /deployments
+ADD deployments/*.war /deployments
+
+CMD ["/opt/jws-5.5/tomcat/bin/launch.sh"]
