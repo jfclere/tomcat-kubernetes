@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8
+FROM registry.access.redhat.com/ubi9
 LABEL Description="Builder for JWS operator"
 VOLUME /tmp
 
